@@ -9,4 +9,20 @@ services:
     volumes:
       - ./tbapp:/tbapp
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+     sh -c "python manage.py wait_for_db &&
+            python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=tbapp
+      - DB_USER=postgresuser
+      - DB_PASS=SecretPostgresPassword
+    depends_on:
+      - db
+
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=tbapp
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=SecretPostgresPassword

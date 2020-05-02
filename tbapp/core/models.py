@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                         PermissionsMixin
+from django.conf import settings
 
 
 class UserManager(BaseUserManager):
@@ -35,3 +36,44 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Category(models.Model):
+    """Category to be used for a place"""
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Place(models.Model):
+    """Place object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE
+    )
+    name = models.CharField(max_length=255)
+    latitude = models.DecimalField(
+        max_digits=22,
+        decimal_places=16,
+        blank=True,
+        null=True
+    )
+    longitude = models.DecimalField(
+        max_digits=22,
+        decimal_places=16,
+        blank=True,
+        null=True
+    )
+    score = models.DecimalField(
+        max_digits=2,
+        decimal_places=1,
+        blank=True,
+        null=True
+    )
+    notes = models.TextField(max_length=1000)
+    external_source = models.URLField()
+    categories = models.ManyToManyField('Category')
+
+    def __str__(self):
+        return self.name

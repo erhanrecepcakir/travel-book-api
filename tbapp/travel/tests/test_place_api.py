@@ -24,7 +24,6 @@ def sample_place(user, **params):
         'name': 'Anywhere buildings',
         'latitude': 30,
         'longitude': 60.5,
-        'score': 4.5,
         'notes': 'I like here. Should be visited again!!',
         'external_source': 'www.anysourceblablablabla.com',
     }
@@ -108,7 +107,6 @@ class PrivatePlaceApiTests(TestCase):
             'name': 'BJK Inonu Stadium',
             'latitude': 41,
             'longitude': 28,
-            'score': 5,
             'notes': 'Football Temple',
             'external_source': 'https://www.openstreetmap.org/relation/6554433'
         }
@@ -127,7 +125,6 @@ class PrivatePlaceApiTests(TestCase):
             'name': 'BJK Inonu Stadium',
             'latitude': 41,
             'longitude': 28,
-            'score': 5,
             'notes': 'Football Temple',
             'external_source': 'http://www.openstreetmap.org/relation/6554433',
             'categories': [category1.id, category2.id],
@@ -165,7 +162,6 @@ class PrivatePlaceApiTests(TestCase):
             'name': 'BJK Inonu Stadium',
             'latitude': 41,
             'longitude': 28,
-            'score': 5,
             'notes': 'Football Temple',
             'external_source': 'http://www.openstreetmap.org/relation/6554433/'
         }
@@ -176,7 +172,6 @@ class PrivatePlaceApiTests(TestCase):
         self.assertEqual(place.name, payload['name'])
         self.assertEqual(place.latitude, payload['latitude'])
         self.assertEqual(place.longitude, payload['longitude'])
-        self.assertEqual(place.score, payload['score'])
         self.assertEqual(place.notes, payload['notes'])
         self.assertEqual(place.external_source, payload['external_source'])
 

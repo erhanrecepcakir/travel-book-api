@@ -8,6 +8,7 @@ from travel import views
 router = DefaultRouter()
 router.register('categorys', views.CategoryViewSet)
 router.register('places', views.PlaceViewSet)
+router.register('visits', views.VisitViewSet)
 
 
 app_name = 'travel'

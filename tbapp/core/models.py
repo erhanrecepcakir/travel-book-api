@@ -65,15 +65,37 @@ class Place(models.Model):
         blank=True,
         null=True
     )
+    avg_score = models.DecimalField(
+        max_digits=2,
+        decimal_places=1,
+        blank=True,
+        null=True
+    )
+    notes = models.TextField(max_length=1000, blank=True)
+    external_source = models.URLField(blank=True)
+    categories = models.ManyToManyField('Category')
+
+    def __str__(self):
+        return self.name
+
+
+class Visit(models.Model):
+    """Visit object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE
+    )
+    title = models.CharField(max_length=255, blank=True)
+    place = models.ForeignKey(Place, models.CASCADE)
+    time = models.DateField(
+        auto_now=False,
+        auto_now_add=False,
+        blank=True, null=True
+    )
     score = models.DecimalField(
         max_digits=2,
         decimal_places=1,
         blank=True,
         null=True
     )
-    notes = models.TextField(max_length=1000)
-    external_source = models.URLField()
-    categories = models.ManyToManyField('Category')
-
-    def __str__(self):
-        return self.name
+    notes = models.TextField(max_length=1000, blank=True)

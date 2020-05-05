@@ -99,3 +99,23 @@ class Visit(models.Model):
         null=True
     )
     notes = models.TextField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Plan(models.Model):
+    """Plan object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE
+    )
+    name = models.CharField(max_length=255)
+    begins = models.DateField(auto_now=False, auto_now_add=False)
+    ends = models.DateField(auto_now=False, auto_now_add=False)
+    budget = models.DecimalField(max_digits=10, decimal_places=2)
+    done = models.BooleanField(default=False)
+    visits = models.ManyToManyField('Visit')
+
+    def __str__(self):
+        return self.name

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Category, Place, Visit
+from core.models import Category, Place, Visit, Plan
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -49,3 +49,23 @@ class VisitSerializer(serializers.ModelSerializer):
 class VisitDetailSerializer(VisitSerializer):
     """Serializer a visit detail"""
     place = PlaceSerializer(many=False, read_only=True)
+
+
+class PlanSerializer(serializers.ModelSerializer):
+    """Serialize a plan"""
+    visits = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Visit.objects.all()
+    )
+
+    class Meta:
+        model = Plan
+        fields = (
+         'id', 'name', 'begins', 'ends', 'budget', 'visits', 'done'
+        )
+        read_only_fields = ('id',)
+
+
+class PlanDetailSerializer(PlanSerializer):
+    """Serializer a plan detail"""
+    visits = VisitSerializer(many=True, read_only=True)
